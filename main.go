@@ -6,6 +6,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"log"
+	"strings"
 )
 
 type quiz struct {
@@ -37,7 +38,7 @@ func main() {
 
 }
 
-func readCSV() ([][]string, error) {
+func readCSV() (lines [][]string, err error) {
 	csvFile := flag.String("csv", "problems.csv", "Csv file in 'question, answer' format")
 	flag.Parse()
 
@@ -46,6 +47,8 @@ func readCSV() ([][]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Couldn't open file")
 	}
+
+	defer file.Close()
 
 	r := csv.NewReader(file)
 
@@ -64,7 +67,7 @@ func buildQuiz(lines [][]string) []quiz {
 	for i, l := range lines {
 		q[i] = quiz {
 			question: l[0],
-			solution: l[1],
+			solution: strings.TrimSuffix(l[1], ""),
 		}
 	}
 	return q
