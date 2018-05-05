@@ -26,6 +26,10 @@ func main() {
 	}
 
 	quiz := buildQuiz(l)
+
+	fmt.Printf("Press enter to start the quiz\n")
+	fmt.Scanln()
+
 	score := 0
 	timer := time.NewTimer(time.Duration(*sec) * time.Second)
 
@@ -73,7 +77,7 @@ func readCSV(csvFile string) (lines [][]string, err error) {
 
 func buildQuiz(lines [][]string) []quiz {
 	q := make([]quiz, len(lines))
-	
+
 	for i, l := range lines {
 		q[i] = quiz {
 			question: l[0],
