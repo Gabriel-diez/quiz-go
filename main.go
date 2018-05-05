@@ -48,7 +48,7 @@ func main() {
 			select {
 			case <- timer.C:
 				fmt.Printf("Time out !\n")
-				break quizLoop;
+				break quizLoop
 			case answer := <-answerC:
 				if answer == q.solution {
 					score++
