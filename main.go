@@ -6,7 +6,6 @@ import (
 	"encoding/csv"
 	"fmt"
 	"log"
-	"github.com/davecgh/go-spew/spew"
 )
 
 type quiz struct {
@@ -20,9 +19,22 @@ func main() {
 		log.Fatal(err)
 	}
 
-	q := buildQuiz(l)
+	quiz := buildQuiz(l)
 
-	spew.Dump(q)
+	score := 0
+
+	for i, q := range quiz {
+		fmt.Printf("Question %d: %s ?\n", i + 1, q.question)
+		var answer string
+		fmt.Scanf("%s\n", &answer)
+
+		if answer == q.solution {
+			score++
+		}
+	}
+
+	fmt.Printf("Your score is %d/%d.\n", score, len(quiz))
+
 }
 
 func readCSV() ([][]string, error) {
