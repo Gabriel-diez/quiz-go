@@ -9,6 +9,10 @@ import (
 	"github.com/davecgh/go-spew/spew"
 )
 
+type quiz struct {
+	question, solution string
+}
+
 func main() {
 	l, err := readCSV()
 
@@ -16,7 +20,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	spew.Dump(l)
+	q := buildQuiz(l)
+
+	spew.Dump(q)
 }
 
 func readCSV() ([][]string, error) {
@@ -38,4 +44,16 @@ func readCSV() ([][]string, error) {
 	}
 
 	return l, nil
+}
+
+func buildQuiz(lines [][]string) []quiz {
+	q := make([]quiz, len(lines))
+
+	for i, l := range lines {
+		q[i] = quiz {
+			question: l[0],
+			solution: l[1],
+		}
+	}
+	return q
 }
